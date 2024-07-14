@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Consulta</title>
+</head>
+<body class="bg-dark text-light">
+<div class="container py-5">
+    <div class="row">
+        <div class="text-center mb-3">
+            <p class="fs-2 fw-bold text-light">Consulta de Agendamentos <a id="backLink" style="font-size: 15px;" href="">Voltar</a></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="text-center mt-2 mb-5">
+            <p class="fs-4 text-light">Usuário: {{nome}}</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <label for="filterLocal" class="form-label">Filtrar por Local</label>
+            <select id="filterLocal" class="form-select">
+                <option value="">Todos</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="filterDia" class="form-label">Filtrar por Dia</label>
+            <select id="filterDia" class="form-select">
+                <option value="">Todos</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="filterHora" class="form-label">Filtrar por Horario</label>
+            <select id="filterHora" class="form-select">
+                <option value="">Todos</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="filterResposta" class="form-label">Filtrar por Resposta</label>
+            <select id="filterResposta" class="form-select">
+                <option value="">Todos</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="p-1 rounded">
+        <table class="table table-striped text-light" id="agendamentosTable">
+            <thead>
+                <tr>
+                    <th>N° Pedido</th>
+                    <th>Email</th>
+                    <th>Local</th>
+                    <th>Dia</th>
+                    <th>Hora</th>
+                    <th>Conteúdo</th>
+                    <th>Resposta</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr class="text-light">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td class="local">{{ user.Sala }}-{{ user.Bloco }}</td>
+                    <td class="dia">{{ user.Dia }}</td>
+                    <td class="hora">{{ user.Hora }}</td>
+                    <td><textarea disabled class="text-light col-12" style="background-color: transparent;" name="coteudo" id="coteudo">{{ user.couteudo }}</textarea></td>
+                    <td class="resposta">
+                        {% if user.aprovado == 1 %}
+                        <span class="text-success">Aprovado</span>
+                        {% endif %}
+                        {% if user.aprovado == 2 %}
+                        <span class="text-danger">Não Aprovado</span>
+                        {% endif %}
+                        {% if user.aprovado == 0 %}
+                        <span style="color: #ffff00;">Em analise</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='Consulta.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

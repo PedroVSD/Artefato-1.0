@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Confirmação</title>
+  </head>
+  <body>
+    <script>
+      var confirmation = confirm("Essa conta tem Permissão de Administrador. Deseja entrar no modo Admin?");
+      var form = document.createElement("form");
+      form.method = "POST";
+      form.action = "/Confirm";
+
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "confirmation";
+      input.value = confirmation ? "yes" : "no";
+      form.appendChild(input);
+
+      document.body.appendChild(form);
+      form.submit();
+    </script>
+  </body>
+</html>

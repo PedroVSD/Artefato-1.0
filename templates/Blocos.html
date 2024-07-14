@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Salas</title>
+</head>
+<body class="bg-dark text-light">
+<div class="container py-5">
+    <div class="row">
+        <div class="text-center mb-3">
+            <p class="fs-2 fw-bold text-light">Salas <a id="backLink" style="font-size: 15px;" href="">Voltar</a></p>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="row mb-4 g-3">
+        <div class="col-md-3">
+            <label for="filterSala" class="form-label fs-5 fw-bold">Sala:</label>
+            <input min="0"  type="number" id="filterSala" class="form-control" placeholder="Digite a Sala" oninput="chargeUrl()">
+        </div>
+        <div class="col-md-3">
+            <label for="filterBloco" class="form-label fs-5 fw-bold">Bloco:</label>
+            <select class="form-select" id="filterBloco" onchange="reloadPage()">
+                <option value="">Escolha um Bloco</option>
+                <option value="A">Administração</option>
+                <option value="B">Biblioteca</option>
+                <option value="M">Multimídia</option>
+                <option value="I">Informática</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="filterAndar" class="form-label fs-5 fw-bold">Andar:</label>
+            <select class="form-select" id="filterAndar" onchange="chargeUrl()">
+                <option value="">Todos</option>
+                <option value="1">1º Andar</option>
+                <option value="2">2º Andar</option>
+                <option value="3">3º Andar</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="filterDia" class="form-label fs-5 fw-bold">Dia da Semana:</label>
+            <select class="form-select" id="filterDia" onchange="reloadPage()">
+                <option value="0">Segunda-Feira</option>
+                <option value="1">Terça-Feira</option>
+                <option value="2">Quarta-Feira</option>
+                <option value="3">Quinta-Feira</option>
+                <option value="4">Sexta-Feira</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="p-1 rounded" class="tabela">
+        <table class="table table-striped text-light" id="salasTable">
+            <thead>
+                <tr>
+                    <th>Designado</th>
+                    <th>Sala</th>
+                    {% if hora < 10 %}
+                    <th>08:00-10:00</th>
+                    {% endif %}
+    
+                    {% if hora < 12 %}
+                    <th>10:00-12:00</th>
+                    {% endif %}
+                    
+                    {% if hora < 16 %}
+                    <th>14:00-16:00</th>
+                    {% endif %}
+    
+                    {% if hora < 18 %}
+                    <th>16:00-18:00</th>
+                    {% endif %}
+    
+                    {% if hora < 20 %}
+                    <th>18:00-20:00</th>
+                    {% endif %}
+    
+                    {% if hora < 22 %}
+                    <th>20:00-22:00</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for dado in dados %}
+                  <tr class="text-light">
+                      <td>{{dado.curso}}</td>
+                      <td>{{dado.sala}}</td>
+                        {% if hora < 10 %}
+                            {% if dado.hora[0] == "Livre" %}
+                                <td>{{dado.hora[0]}}</td>
+                            {% else %}
+                                <td><textarea class="text-light no-select" style="width: 150px; background-color: transparent; cursor: pointer;" ondblclick="showAlert(this);" readonly>{{dado.hora[0]}}</textarea></td>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if hora < 12 %}
+                            {% if dado.hora[1] == "Livre" %}
+                                <td>{{dado.hora[1]}}</td>
+                            {% else %}
+                                <td><textarea class="text-light no-select" style="width: 150px; background-color: transparent; cursor: pointer;" ondblclick="showAlert(this);" readonly>{{dado.hora[1]}}</textarea></td>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if hora < 16 %}
+                            {% if dado.hora[2] == "Livre" %}
+                                <td>{{dado.hora[2]}}</td>
+                            {% else %}
+                                <td><textarea class="text-light no-select" style="width: 150px; background-color: transparent; cursor: pointer;" ondblclick="showAlert(this);" readonly>{{dado.hora[2]}}</textarea></td>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if hora < 18 %}
+                            {% if dado.hora[3] == "Livre" %}
+                                <td>{{dado.hora[3]}}</td>
+                            {% else %}
+                                <td><textarea class="text-light no-select" style="width: 150px; background-color: transparent; cursor: pointer;" ondblclick="showAlert(this);" readonly>{{dado.hora[3]}}</textarea></td>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if hora < 20 %}
+                            {% if dado.hora[4] == "Livre" %}
+                                <td>{{dado.hora[4]}}</td>
+                            {% else %}
+                                <td><textarea class="text-light no-select" style="width: 150px; background-color: transparent; cursor: pointer;" ondblclick="showAlert(this);" readonly>{{dado.hora[4]}}</textarea></td>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if hora < 22 %}
+                            {% if dado.hora[5] == "Livre" %}
+                                <td>{{dado.hora[5]}}</td>
+                            {% else %}
+                                <td><textarea class="text-light no-select" style="width: 150px; background-color: transparent; cursor: pointer;" ondblclick="showAlert(this);" readonly>{{dado.hora[5]}}</textarea></td>
+                            {% endif %}
+                        {% endif %}
+                  </tr>
+                  {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='Blocos.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
